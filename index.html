@@ -41,7 +41,32 @@
         </section>
 
         <section>
-          <img data-src="images/reuse.jpg" width="60%">
+          <section>
+            <h2>Not Invented Here Syndrome</h2>
+            <aside class="notes">
+              It's easy to write python code. Sometimes too easy.
+            </aside>
+          </section>
+          <section>
+            <img data-src="images/reuse.jpg" width="60%">
+            <aside class="notes">
+              Stand on the shoulders of giants
+            </aside>
+          </section>
+          <section>
+            <!-- podcast.__init__ episode 4, 15:40 -->
+            <h2>Python as Glue</h2>
+            <blockquote cite="">
+              &ldquo;Python's strength is that it's like
+              software superglue. It lets you build abstractions
+              like they were Lego&rdquo; -- Travis Oliphant
+            </blockquote>
+          </section>
+
+          <section>
+            <h2>The cost of software</h2>
+          </section>
+
         </section>
 
         <section data-background="rgb(115, 29, 9)">
@@ -67,11 +92,7 @@
             <li class="fragment">Software for academia / research</li>
             <li class="fragment">Software for industry</li>
           </ul>
-        </section>
-
-        <section>
-            <h2>What makes it Different?</h2>
-            <aside class="notes">
+          <aside class="notes">
             <ul>
                 <li>Tools often commercial / expensive</li>
                 <li>Difficult integration problems</li>
@@ -80,19 +101,40 @@
                 <li>Different expectations for quality</li>
                 <li>Written by scientists, not software engineers</li>
             </ul>
-            </aside>
+          </aside>
         </section>
-
 
         <section>
-          <!-- podcast.__init__ episode 4, 15:40 -->
-          <h2>Python as Glue</h2>
-          <blockquote cite="">
-            &ldquo;Python's strength is that it's like
-            software superglue. It lets you build abstractions
-            like they were Lego&rdquo; -- Travis Oliphant
-          </blockquote>
+            <section>
+              <h2>Motivating Example</h2>
+              <p class="fragment">How do I visualise a graph?</p>
+              </section>
+
+            <section>
+              <img src="images/graphviz-out.png" width="30%"/>
+            </section>
+
+            <section>
+              <h2>Subprocess</h2>
+                <pre><code class="python" style="font-size:25px;">
+from subprocess import *
+
+def graphviz(srcf, dstf, fmt='png'):
+    cmd = 'dot -T%(fmt)s %(srcf)s -o %(dstf)s' 
+    cmd = cmd % locals()
+    subprocess.check_call(cmd.split())
+                </code></pre>
+              </section>
+
+           <section>
+            <ul>
+                <li>The Unix Philosophy - "Do one thing and do it well"</li>
+                <li>Use this approach if the code is already an application</li>
+                <li>Avoid when the thing to wrap has an object model</li>
+            </ul>
+            </section>
         </section>
+
 
 
         <section>
@@ -140,39 +182,6 @@
                 <li>Use a tool to help you write an extension module</li>
                 <li>Use a Foreign Function Interface library</li>
             </ul>
-        </section>
-
-        <section>
-            <section>
-              <h2>Subprocess</h2>
-                <pre><code class="python">
-from subprocess import *
-
-def graphviz(srcf, dstf, fmt='png'):
-cmd = 'dot -T%(fmt)s %(srcf)s -o %(dstf)s' 
-cmd = cmd % locals()
-subprocess.check_call(cmd.split())
-                </code></pre>
-              </section>
-
-              <section>
-                <pre><code>
-digraph G {
-a -&gt; b [ label="a to b" ];
-b -&gt; c [ label="another label"];
-}
-                </code></pre>
-            </section>
-            <section>
-              <img src="images/graphviz-out.png"/>
-            </section>
-            <section>
-            <ul>
-                <li>The Unix Philosophy - "Do one thing and do it well"</li>
-                <li>Use this approach if the code is already an application</li>
-                <li>Avoid when the thing to wrap has an object model</li>
-            </ul>
-            </section>
         </section>
 
         <section>
