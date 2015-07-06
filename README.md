@@ -4,13 +4,8 @@
 
 These are the slides and tools for building slides for my PyConAU talk.
 
-## Usage
+## Acknowledgements
 
-These slides can be built using:
-- pandoc
-- reveal.js 
-
-Final styling will be done by hand or with some css / js tweaks, or, if styling
-ends up being to difficult, I can change to use LaTeX and beamer slides.
-
-
+- Thank-you to Jay Yu, who's always my goto guy for the curly MATLAB questions. 
+- Thanks to Alex Skvortov for inspiring me to be the best scientist I can be. 
+- A big thanks also to Justin Young and Tennessee Leeuwenburg for being a sounding board for the content and audience.
