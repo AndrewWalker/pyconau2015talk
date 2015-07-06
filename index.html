@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Not Invented Here - Porting Scientific Software to Python</title>
+
+		<meta name="description" content="Productivity tips for scientists in polyglot programming environment">
+		<meta name="author" content="Andrew Walker">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+				<section>
+					<h1>Not Invented Here</h1>
+					<h3>Porting Scientific Software to Python</h3>
+					<p>
+						<small>Dr. Andrew Walker / <a href="http://twitter.com/walkera101">@walkera101</a></small>
+					</p>
+                </section>
+
+                <section>
+                    <img data-src="reuse.jpg" width="60%">
+				</section>
+
+
+
+                <section data-background="rgb(115, 29, 9)">
+
+                    <section>
+                    <h2>Before I get started...</h2>
+                    <p>Answer the following questions</p>
+                    <ul>
+                        <li>Is your code under version control?</li>
+                        <li>Do you write tests?</li>
+                        <li>Do your tests run regularly?</li>
+                        <li>Do you document your software?</li>
+                    </ul>
+                    </section>
+
+                    <section>
+                        <img data-src="software-carpentry-banner.png">
+                    </section>
+                </section>
+
+
+				<section>
+                    <h2>What is "Scientific Software"?</h2>
+                    <ul>
+                        <li class="fragment">Software for academia / research</li>
+                        <li class="fragment">Software for industry</li>
+                    <ul>
+                </section>
+
+				<section>
+                    <h2>What makes it Different?</h2>
+                    <aside class="notes">
+                    <ul>
+                        <li>Tools often commercial / expensive</li>
+                        <li>Difficult integration problems</li>
+                        <li>Complex dependencies</li>
+                        <li>Different maintenance lifecycles</li>
+                        <li>Different expectations for quality</li>
+                        <li>Written by scientists, not software engineers</li>
+                    </ul>
+                    </aside>
+                </section>
+
+
+                <section>
+                    <!-- podcast.__init__ episode 4, 15:40 -->
+					<h2>Python as Glue</h2>
+                    <blockquote cite="">
+                        &ldquo;Python's strength is that it's like
+                        software superglue. It lets you build abstractions
+                        like they were Lego&rdquo; -- Travis Oliphant
+					</blockquote>
+				</section>
+
+
+                <section>
+                    <section>
+                        <h2>Why would you do this?</h2>
+                        <aside class="notes">
+                        <ul>
+                            <li>You can't solve a problem without a library/tool</li>
+                            <li>Cost</li>
+                            <li>Quality</li>
+                            <li>Maintainability</li>
+                        </ul>
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Performance</h2>
+                        <img class="fragment" src="high-performance-python.jpg"/>
+                    </section>
+                    <section>
+                        <h2>Necessity</h2>
+                    </section>
+
+				</section>
+
+				<section>
+                    <h2>Why wouldn't you do this?</h2>
+                    <ul class="fragment">
+                        <!-- 8:50 in podcast.__init__ episode 4 
+
+                        Travis Oliphant "It was not good for my acadmeic career"
+                        -->
+                        <li>It's not glamourous</li>
+                        <li>It's time consuming to get right</li>
+                        <li>It's hard to maintain</li>
+                        <li>Often, something similar already exists</li>
+                        <li>You probably need to read / write some C code</li>
+                    <ul>
+				</section>
+
+                <section>
+                    <h2>Approaches</h2>
+                    <ul>
+                        <li>Run an external process</li>
+                        <li>Write a Python extension module</li>
+                        <li>Use a tool to help you write an extension module</li>
+                        <li>Use a Foreign Function Interface library</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+					<h2>Subprocess</h2>
+                    <!--<pre><code class="python" data-trim contenteditable style="font-size: 40px;">-->
+                    <pre><code class="python" style="font-size: 30px;">
+from subprocess import *
+
+def graphviz(srcf, dstf, fmt='png'):
+    cmd = 'dot -T%(fmt)s %(srcf)s -o %(dstf)s' 
+    cmd = cmd % locals()
+    subprocess.check_call(cmd.split())
+                    </code></pre>
+                    </section>
+
+                    <section>
+                        <pre><code>
+digraph G {
+ a -&gt; b [ label="a to b" ];
+ b -&gt; c [ label="another label"];
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                    <img src="graphviz-out.png"/>
+                    </section>
+                    <section>
+                    <ul>
+                        <li>The Unix Philosophy - "Do one thing and do it well"</li>
+                        <li>Use this approach if the code is already an application</li>
+                        <li>Avoid when the thing to wrap has an object model</li>
+                    </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Cython</h2>
+                    </section>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+                center: true,
+                fragments: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
