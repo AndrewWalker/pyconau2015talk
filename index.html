@@ -87,11 +87,10 @@
 
 
         <section>
-          <h2>What is "Scientific Software"?</h2>
-          <ul>
-            <li class="fragment">Software for academia / research</li>
-            <li class="fragment">Software for industry</li>
-          </ul>
+        <h2>What is "Scientific Software"?</h2>
+        <div class="fragment" style="background-color: white;">
+            <img data-src="images/science.png" width="60%" />
+        </div>
           <aside class="notes">
             <ul>
                 <li>Tools often commercial / expensive</li>
@@ -182,9 +181,38 @@ def graphviz(srcf, dstf, fmt='png'):
 
         <section>
             <section>
+                <h2>scipy.weave</h2>
+                <p class="fragment">Take a string of C/C++ code and make it callable from Python</p>
+            </section>
+            <section>
+            <h2>scipy.weave</h2>
+                <pre><code class="python" style="font-size:25px;">
+import scipy.weave
+import numpy as np
+
+def det22(A):
+    code = '''
+    double res;
+    res = A2(0,0) * A2(1,1) - A2(1,0) * A2(0, 1);
+    out[0] = res;
+    '''
+    out = [ 0.0 ]
+    scipy.weave.inline(code = code,
+                       arg_names = ['A', 'out'], 
+    return out[0]
+
+x = np.array([[1, 2],[3,5]])
+print det22(x)
+                </code></pre>
+            </section>
+        </section>
+
+        <section>
+            <section>
                 <h2>Cython</h2>
             </section>
         </section>
+ 
       </div>
 
     </div>
