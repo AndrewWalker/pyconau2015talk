@@ -103,38 +103,11 @@
           </aside>
         </section>
 
-        <section>
-            <section>
-              <h2>Motivating Example</h2>
-              <p class="fragment">How do I visualise a graph?</p>
-              </section>
-
-            <section>
-              <img src="images/graphviz-out.png" width="30%"/>
-            </section>
-
-            <section>
-              <h2>Subprocess</h2>
-                <pre><code class="python" style="font-size:25px;">
-from subprocess import *
-
-def graphviz(srcf, dstf, fmt='png'):
-    cmd = 'dot -T%(fmt)s %(srcf)s -o %(dstf)s' 
-    cmd = cmd % locals()
-    subprocess.check_call(cmd.split())
-                </code></pre>
-              </section>
-
-            <section>
-              <h2>"Do one thing and do it well"</h2>
-            </section>
-        </section>
-
 
 
         <section>
           <section>
-            <h2>Why would you do this?</h2>
+            <h2>Why worry about Interoperability</h2>
             <aside class="notes">
               <ul>
                 <li>You can't solve a problem without a library/tool</li>
@@ -147,10 +120,13 @@ def graphviz(srcf, dstf, fmt='png'):
 
           <section>
             <h2>Performance</h2>
-              <img class="fragment" src="images/high-performance-python.jpg"/>
+            <img class="fragment" src="images/high-performance-python.jpg"/>
           </section>
           <section>
             <h2>Necessity</h2>
+          </section>
+          <section>
+            <h2>Development time is often more expensive than Computing time</h2>
           </section>
         </section>
 
@@ -181,6 +157,41 @@ def graphviz(srcf, dstf, fmt='png'):
 
         <section>
             <section>
+              <h2>Subprocess</h2>
+              <p class="fragment">Interoperability via subprocesses</p>
+            </section>
+
+            <section>
+              <h2>Subprocess</h2>
+              <pre><code class="python" style="font-size:25px;">
+from subprocess import *
+
+def graphviz(srcf, dstf, fmt='png'):
+    cmd = 'dot -T%(fmt)s %(srcf)s -o %(dstf)s' 
+    cmd = cmd % locals()
+    subprocess.check_call(cmd.split())
+              </code></pre>
+            </section>
+
+            <section>
+                <h2>When should you use it?</h2>
+                <ul>
+                    <li>If the tool you're interacting with has a CLI</li>
+                    <li>If performance isn't an issue</li>
+                </ul>
+            </section>
+
+<!--
+            <section>
+              <img src="images/graphviz-out.png" width="30%"/>
+            </section>
+--> 
+        </section>
+
+
+
+        <section>
+            <section>
                 <h2>scipy.weave</h2>
                 <p class="fragment">Take a string of C/C++ code and make it callable from Python</p>
             </section>
@@ -205,14 +216,54 @@ x = np.array([[1, 2],[3,5]])
 print det22(x)
                 </code></pre>
             </section>
+            <section>
+                <h2>When should you use it?</h2>
+                <ul>
+                    <li>When you've got fragments of C/C++</li>
+                    <li>When you're prototyping</li>
+                </ul>
+            </section>
+            <section>
+                <h2>When should you avoid it?</h2>
+                <ul>
+                    <li>When debugging may be time consuming</li>
+                    <li>When you you need to deploy</li>
+                </ul>
+            </section>
+
+
         </section>
 
         <section>
             <section>
                 <h2>Cython</h2>
+                <p class="fragment">A DSL for integrating C, C++ and Python</p>
+            </section>
+            <section>
+            </section>
+            <section>
+                <h2>When should you use it?</h2>
+                <ul>
+                    <li>If you're exploring a solution space</li>
+                    <li>When you need a smooth transition from prototype to production</li>
+                </ul>
+            </section>
+            <section>
+                <h2>When should you avoid it?</h2>
+                <ul>
+                    <li>Cython != python != C/C++</li>
+                </ul>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2>SWIG</h2>
+                <p class="fragment">A DSL for generating FFI bindings</p>
             </section>
         </section>
  
+
       </div>
 
     </div>
@@ -231,7 +282,7 @@ print det22(x)
                 center: true,
                 fragments: true,
 
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
 
         // Optional reveal.js plugins
         dependencies: [
