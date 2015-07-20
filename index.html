@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -48,7 +48,7 @@
             </aside>
           </section>
           <section>
-            <img data-src="images/reuse.jpg" width="60%">
+            <img data-src="images/reuse.png" width="60%">
             <aside class="notes">
               Stand on the shoulders of giants
             </aside>
@@ -132,16 +132,16 @@
 
         <section>
           <h2>Why wouldn't you do this?</h2>
-          <ul class="fragment">
+          <ul>
             <!-- 8:50 in podcast.__init__ episode 4 
   
             Travis Oliphant "It was not good for my acadmeic career"
             -->
-            <li>It's not glamourous</li>
-            <li>It's time consuming to get right</li>
-            <li>It's hard to maintain</li>
-            <li>Often, something similar already exists</li>
-            <li>You probably need to read / write some C code</li>
+            <li class="fragment">It's not glamourous</li>
+            <li class="fragment">It's time consuming to get right</li>
+            <li class="fragment">It's hard to maintain</li>
+            <li class="fragment">Often, something similar already exists</li>
+            <li class="fragment">You probably need to read / write some C code</li>
           </ul>
         </section>
 
@@ -163,8 +163,7 @@
 
             <section>
               <h2>Subprocess</h2>
-              <pre><code class="python" style="font-size:25px;">
-from subprocess import *
+              <pre><code class="python" style="font-size:25px;">from subprocess import *
 
 def graphviz(srcf, dstf, fmt='png'):
     cmd = 'dot -T%(fmt)s %(srcf)s -o %(dstf)s' 
@@ -174,7 +173,7 @@ def graphviz(srcf, dstf, fmt='png'):
             </section>
 
             <section>
-                <h2>When should you use it?</h2>
+                <h2>When should you use subprocesses?</h2>
                 <ul>
                     <li>If the tool you're interacting with has a CLI</li>
                     <li>If performance isn't an issue</li>
@@ -196,12 +195,14 @@ def graphviz(srcf, dstf, fmt='png'):
                 <p class="fragment">Take a string of C/C++ code and make it callable from Python</p>
             </section>
             <section>
+                <h2>Determinant of a 2 x 2 matrix</h2>
+                <div class="fragment" style="background-color: white;">
+                    <img src="images/det22formula.gif"/>
+                </div>
+            </section>
+            <section>
             <h2>scipy.weave</h2>
-                <pre><code class="python" style="font-size:25px;">
-import scipy.weave
-import numpy as np
-
-def det22(A):
+                <pre><code class="python" style="font-size:25px;">def det22(A):
     code = '''
     double res;
     res = A2(0,0) * A2(1,1) - A2(1,0) * A2(0, 1);
@@ -212,26 +213,23 @@ def det22(A):
                        arg_names = ['A', 'out'], 
     return out[0]
 
-x = np.array([[1, 2],[3,5]])
-print det22(x)
+print det22(np.array([[1, 2],[3,5]]))
                 </code></pre>
             </section>
             <section>
-                <h2>When should you use it?</h2>
+                <h2>Use scipy.weave when...</h2>
                 <ul>
-                    <li>When you've got fragments of C/C++</li>
-                    <li>When you're prototyping</li>
+                    <li>you've got fragments of C/C++</li>
+                    <li>you're prototyping</li>
                 </ul>
             </section>
             <section>
-                <h2>When should you avoid it?</h2>
+                <h2>Avoid scipy.weave when...</h2>
                 <ul>
-                    <li>When debugging may be time consuming</li>
-                    <li>When you you need to deploy</li>
+                    <li>debugging may be time consuming</li>
+                    <li>you you need want to share your code</li>
                 </ul>
             </section>
-
-
         </section>
 
         <section>
@@ -240,18 +238,88 @@ print det22(x)
                 <p class="fragment">A DSL for integrating C, C++ and Python</p>
             </section>
             <section>
+                <h2>Distance From a Line to a Point</h2>
+                <div class="fragment" style="background-color: white;">
+                    <img src="images/lineptdist.png"/>
+                </div>
             </section>
             <section>
-                <h2>When should you use it?</h2>
+                <h2>Original Code</h2>
+                <pre><code data-trim style="font-size: 12px;">typedef struct tagXYZ
+{
+    float X, Y, Z;
+}
+XYZ;
+
+float Magnitude( XYZ *Point1, XYZ *Point2 )
+{
+    XYZ Vector;
+
+    Vector.X = Point2->X - Point1->X;
+    Vector.Y = Point2->Y - Point1->Y;
+    Vector.Z = Point2->Z - Point1->Z;
+
+    return (float)sqrt( Vector.X * Vector.X + Vector.Y * Vector.Y + Vector.Z * Vector.Z );
+}
+
+int DistancePointLine( XYZ *Point, XYZ *LineStart, XYZ *LineEnd, float *Distance )
+{
+    float LineMag;
+    float U;
+    XYZ Intersection;
+ 
+    LineMag = Magnitude( LineEnd, LineStart );
+ 
+    U = ( ( ( Point->X - LineStart->X ) * ( LineEnd->X - LineStart->X ) ) +
+        ( ( Point->Y - LineStart->Y ) * ( LineEnd->Y - LineStart->Y ) ) +
+        ( ( Point->Z - LineStart->Z ) * ( LineEnd->Z - LineStart->Z ) ) ) /
+        ( LineMag * LineMag );
+ 
+    if( U < 0.0f || U > 1.0f )
+        return 0;   // closest point does not fall within the line segment
+ 
+    Intersection.X = LineStart->X + U * ( LineEnd->X - LineStart->X );
+    Intersection.Y = LineStart->Y + U * ( LineEnd->Y - LineStart->Y );
+    Intersection.Z = LineStart->Z + U * ( LineEnd->Z - LineStart->Z );
+ 
+    *Distance = Magnitude( Point, &Intersection );
+ 
+    return 1;
+}</code></pre>    
+            </section>
+            <section>
+                <h2>Via a Jupyter Notebook</h2>
+                <pre><code code class="python" >%%cython
+
+cdef dist_sq(np.ndarray p, np.ndarray q):
+    cdef double dx = q[0] - p[0]
+    cdef double dy = q[1] - p[1]
+    return dx*dx + dy*dy
+
+def dist_pt_seg(np.ndarray p, np.ndarray u, np.ndarray v):
+    cdef double seglen_sq = dist_sq(u, v)
+    t = (p[0] - u[0]) * (v[0] - u[0])
+    t += (p[1] - u[1]) * (v[1] - u[1])
+    t /= seglen_sq
+    if t < 0 or t > 1.0:
+        return 0.0
+    return np.sqrt(dist_sq(p, u + t * (v-u)))
+</code></pre>
+            </section>
+            <section>
+                <h2>Use cython if ...</h2>
                 <ul>
-                    <li>If you're exploring a solution space</li>
-                    <li>When you need a smooth transition from prototype to production</li>
+                    <li>you're exploring a solution space</li>
+                    <li>you're considering sharing your code</li>
+                    <li>you want integrated profiling tools</li>
+                    <li>neither python or C/C++ is enough</li>
                 </ul>
             </section>
             <section>
-                <h2>When should you avoid it?</h2>
+                <h2>Avoid cython if ...</h2>
                 <ul>
-                    <li>Cython != python != C/C++</li>
+                    <li>you don't have time to learn a new language</li>
+                    <li class="fragment">Cython != python</li>
                 </ul>
             </section>
         </section>
