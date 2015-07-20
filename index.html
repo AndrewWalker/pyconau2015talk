@@ -16,7 +16,16 @@
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
-
+    <style>
+        <!--
+        .reveal pre {
+            width: 100%
+        }
+        .reveal pre code {
+            max-height: 500px;
+        }
+        -->
+    </style>
     <!-- Printing and PDF exports -->
     <script>
       var link = document.createElement( 'link' );
@@ -245,7 +254,7 @@ print det22(np.array([[1, 2],[3,5]]))
             </section>
             <section>
                 <h2>Original Code</h2>
-                <pre><code data-trim style="font-size: 12px;">typedef struct tagXYZ
+                <pre><code data-trim>typedef struct tagXYZ
 {
     float X, Y, Z;
 }
