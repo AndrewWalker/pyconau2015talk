@@ -243,6 +243,52 @@ print det22(np.array([[1, 2],[3,5]]))
 
         <section>
             <section>
+                <h2>ctypes</h2>
+                <p class="fragment">A standard library module for calling c-functions</p>
+            </section>
+            <section>
+                <h2>Bessel functions</h2>
+                <h3 class="fragment">(Without scipy.special)</h3>
+                <aside class="notes">
+                    <ul>
+                        <li>Bessel functions are used in the solution of PDEs in circular domains</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <pre><code class="python" data-trim >import ctypes
+lib = ctypes.CDLL('/usr/lib/libm.dylib')
+
+bessel_j0 = lib.j0
+bessel_j0.argtypes = [ ctypes.c_double ]
+bessel_j0.restype = ctypes.c_double
+
+bessel_j1 = lib.j1
+bessel_j1.argtypes = [ ctypes.c_double ]
+bessel_j1.restype = ctypes.c_double
+
+bessel_jn = lib.jn
+bessel_jn.argtypes = [ ctypes.c_int, ctypes.c_double ]
+bessel_jn.restype = ctypes.c_double</code></pre>
+            </section>
+            <section>
+                <h2>Use ctypes if ...</h2>
+                <ul>
+                    <li>you want only want one or two functions</li>
+                    <li>you don't want to write c code</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Avoid ctypes if ...</h2>
+                <ul>
+                    <li>you're doing anything complicated</li>
+                </ul>
+            </section>
+ 
+        </section>
+
+        <section>
+            <section>
                 <h2>Cython</h2>
                 <p class="fragment">A DSL for integrating C, C++ and Python</p>
             </section>
