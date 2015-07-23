@@ -386,9 +386,37 @@ def dist_pt_seg(np.ndarray p, np.ndarray u, np.ndarray v):
             </section>
         </section>
  
+        <section>
+            <section>
+                <h2>pymatbridge</h2>
+                <p class="fragment">Calling MATLAB from Python</p>
+            </section>
+            <section>
+                <h2>Solving the steady state heat equation with conformal mapping</h2>
+                <div class="fragment" style="background-color: white;">
+                    <img style="width: 40%" src="images/conformal1.png"/>
+                    <img style="width: 40%" src="images/conformal2.png"/>
+                </div>
+            </section>
+            <section>
+                <h2></h2>
+                <code class="python" ><pre>%%matlab -i boundary_conditions 
 
-      </div>
+phi = lapsolve(p, boundary_conditions);
+[tri, x, y] = triangulate(p);
+figure;
+trisurf(tri, x, y, phi(x+i*y));</pre></code>
+                </section>
+                <section>
+                    <h2>Use pymatbridge if ...</h2>
+                    <ul>
+                        <li>you want to interactively combine Python and MATLAB</li>
+                        <li>you only need to exchange data (not functions)</li>
+                    </ul>
+                </section>
+            </section>
 
+        </div>
     </div>
 
     <script src="lib/js/head.min.js"></script>
