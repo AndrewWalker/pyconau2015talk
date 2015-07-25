@@ -227,51 +227,6 @@ def graphviz_dot(srcf, dstf, fmt='png'):
                 </ul>
             </section>
 
-       </section>
-
-
-
-        <section>
-            <section>
-                <h2>scipy.weave</h2>
-                <p class="fragment">Take a string of C/C++ code and make it callable from Python</p>
-            </section>
-            <section>
-                <h2>Determinant of a 2 x 2 matrix</h2>
-                <div class="fragment" style="background-color: white;">
-                    <img src="images/det22formula.gif"/>
-                </div>
-            </section>
-            <section>
-            <h2>scipy.weave</h2>
-                <pre><code class="python" style="font-size:25px;">def det22(A):
-    code = '''
-    double res;
-    res = A2(0,0) * A2(1,1) - A2(1,0) * A2(0, 1);
-    out[0] = res;
-    '''
-    out = [ 0.0 ]
-    scipy.weave.inline(code = code,
-                       arg_names = ['A', 'out'], 
-    return out[0]
-
-print det22(np.array([[1, 2],[3,5]]))
-                </code></pre>
-            </section>
-            <section>
-                <h2>Use scipy.weave when...</h2>
-                <ul>
-                    <li>you've got fragments of C/C++</li>
-                    <li>you're prototyping</li>
-                </ul>
-            </section>
-            <section>
-                <h2>Avoid scipy.weave when...</h2>
-                <ul>
-                    <li>debugging may be time consuming</li>
-                    <li>you you need want to share your code</li>
-                </ul>
-            </section>
         </section>
 
         <section>
@@ -318,6 +273,83 @@ bessel_jn.restype = ctypes.c_double</code></pre>
                 </ul>
             </section>
  
+        </section>
+
+        <section>
+            <section>
+                <h2>scipy.weave</h2>
+                <p class="fragment">Take a string of C/C++ code and make it callable from Python</p>
+            </section>
+            <section>
+                <h2>Transpose a 2 by 2 matrix</h2>
+                <pre><code class="python" style="font-size:25px;">def transpose22(A):
+    code = '''
+    double a_10 = A2(1, 0);
+    double a_01 = A2(0, 1);
+    A2(1, 0) = a_01;
+    A2(0, 1) = a_10;'''
+    scipy.weave.inline(code = code, 
+                       arg_names = ['A'])
+    return A
+
+print transpose22(np.array([[1, 2],[3,5]]))
+                </code></pre>
+            </section>
+            <section>
+                <h2>Minkowski sum using CGAL</h2>
+                <pre><code style="max-height:100%">CGAL_MINK_SUM_CODE = '''
+    Polygon_2 P;
+    Polygon_2 Q;
+    for(int i = 0; i &lt Np[0]; i++)
+    {
+        P.push_back(Point_2(P2(i,0), P2(i,1)));
+    }
+    for(int i = 0; i &lt Nq[0]; i++)
+    {
+        Q.push_back(Point_2(Q2(i,0), Q2(i,1)));
+    }
+    Polygon_with_holes_2  sum = minkowski_sum_2(P, Q);
+    auto ob = sum.outer_boundary();
+    for(int i = 0; i &lt ob.size(); i++)
+    {
+        Point_2 pt = ob.vertex(i);
+        py::list t(2);
+        t[0] = py::object( CGAL::to_double(pt.x()) );
+        t[1] = py::object( CGAL::to_double(pt.y()) );
+        out.append( t ); 
+    }'''</code></pre>
+            </section>
+            <section>
+                <h2>Minkowski sum using CGAL</h2>
+                <pre  style="width:100%"><code>def minkowski_sum(p, q, **kwargs):
+    out = []
+    scipy.weave.inline(code = CGAL_MINK_SUM_CODE, 
+           support_code = CGAL_SUPPORT_CODE,
+           arg_names = ['p', 'q', 'out'],
+           headers = cgal_headers(),
+               '&ltCGAL/Exact_predicates_exact_constructions_kernel.h&gt',
+               '&ltCGAL/Cartesian.h&gt',
+               '&ltCGAL/minkowski_sum_2.h&gt',
+           ],
+           libraries = ['CGAL'],
+           **platform_options())
+
+    return np.array(out)</code></pre>
+            </section>
+            <section>
+                <h2>Use scipy.weave when...</h2>
+                <ul>
+                    <li>you've got fragments of C/C++</li>
+                    <li>you're prototyping</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Avoid scipy.weave when...</h2>
+                <ul>
+                    <li>debugging may be time consuming</li>
+                    <li>you you need want to share your code</li>
+                </ul>
+            </section>
         </section>
 
         <section>
@@ -414,26 +446,25 @@ def dist_pt_seg(np.ndarray p, np.ndarray u, np.ndarray v):
 
         <section>
             <section>
-                <h2>SWIG</h2>
-                <p class="fragment">A DSL for generating FFI bindings</p>
-            </section>
-        </section>
- 
-        <section>
-            <section>
                 <h2>pymatbridge</h2>
                 <p class="fragment">Calling MATLAB from Python</p>
             </section>
             <section>
                 <h2>Solving the steady state heat equation with conformal mapping</h2>
-                <div class="fragment" style="background-color: white;">
-                    <img style="width: 40%" src="images/conformal1.png"/>
-                    <img style="width: 40%" src="images/conformal2.png"/>
+                <div class="fragment" style="background-color: white; width: 40%; float: left;">
+                    <img src="images/conformal1.png"/>
+                </div>
+                <div class="fragment" style="background-color: white; width: 40%; float: right;">
+                    <img src="images/conformal2.png"/>
                 </div>
             </section>
             <section>
-                <h2></h2>
-                <code class="python" ><pre>%%matlab -i boundary_conditions 
+                <h2>pymatbridge</h2>
+                <pre><code class="python">%load_ext pymatbridge
+
+boundary_conditions = [0, 0, 0, 1, 0, 0]
+</code></pre>
+                <pre><code class="python" >%%matlab -i boundary_conditions 
 
 phi = lapsolve(p, boundary_conditions);
 [tri, x, y] = triangulate(p);
@@ -448,10 +479,10 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
                     </ul>
                 </section>
             </section>
-
+<!--
         <section data-background="rgb(115, 29, 9)">
           <section>
-            <h2>Before I get started...</h2>
+            <h2>Before I go ...</h2>
             <p>Answer the following questions</p>
             <ul>
                 <li>Is your code under version control?</li>
@@ -464,7 +495,7 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
             <img data-src="images/software-carpentry-banner.png" />
           </section>
         </section>
-
+        -->
 
 
         </div>
