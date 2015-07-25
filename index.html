@@ -17,14 +17,15 @@
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
     <style>
-        <!--
-        .reveal pre {
-            width: 100%
+        html.intro body {
+            background:url("images/pullhair.jpg");
+            background-position:center;
+            background-size: 100%
         }
-        .reveal pre code {
-            max-height: 500px;
-        }
-        -->
+        html.intro h2 {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: rgba(0, 0, 0, 0.8);
+        } 
     </style>
     <!-- Printing and PDF exports -->
     <script>
@@ -50,56 +51,10 @@
         </section>
 
         <section>
-          <section>
-            <h2>Not Invented Here Syndrome</h2>
-            <aside class="notes">
-              It's easy to write python code. Sometimes too easy.
-            </aside>
-          </section>
-          <section>
-            <img data-src="images/reuse.png" width="60%">
-            <aside class="notes">
-              Stand on the shoulders of giants
-            </aside>
-          </section>
-          <section>
-            <!-- podcast.__init__ episode 4, 15:40 -->
-            <h2>Python as Glue</h2>
-            <blockquote cite="">
-              &ldquo;Python's strength is that it's like
-              software superglue. It lets you build abstractions
-              like they were Lego&rdquo; -- Travis Oliphant
-            </blockquote>
-          </section>
-
-          <section>
-            <h2>The cost of software</h2>
-          </section>
-
-        </section>
-
-        <section data-background="rgb(115, 29, 9)">
-          <section>
-            <h2>Before I get started...</h2>
-            <p>Answer the following questions</p>
-            <ul>
-                <li>Is your code under version control?</li>
-                <li>Do you write tests?</li>
-                <li>Do your tests run regularly?</li>
-                <li>Do you document your software?</li>
-            </ul>
-          </section>
-          <section>
-            <img data-src="images/software-carpentry-banner.png" />
-          </section>
-        </section>
-
-
-        <section>
-        <h2>What is "Scientific Software"?</h2>
-        <div class="fragment" style="background-color: white;">
+          <h2>What is "Scientific Software"?</h2>
+          <div class="fragment" style="background-color: white;">
             <img data-src="images/science.png" width="60%" />
-        </div>
+          </div>
           <aside class="notes">
             <ul>
                 <li>Tools often commercial / expensive</li>
@@ -115,8 +70,89 @@
 
 
         <section>
+
+          <section>
+            <h2>Not Invented Here Syndrome</h2>
+            <aside class="notes">
+              It's easy to write python code. Sometimes too easy.
+            </aside>
+          </section>
+
+          <section>
+          <h2>Interoperability Alternatives</h2>
+            <div style="width:30%; float:right;">
+              <ul>
+                <li>ctypes</li>
+                <li>subprocess</li>
+                <li>CFFI</li>
+                <li>cython</li>
+                <li>f2py</li>
+                <li>pyfort</li>
+             </ul>
+            </div>
+            <div style="width:30%; float:right">
+              <ul>
+                <li>Reflex / cppyy</li>
+                <li>pyrex</li>
+                <li>SIP</li>
+                <li>boost::python</li>
+                <li>scipy.weave</li>
+                <li>rpy</li>
+                <li>rpy2</li>
+              </ul>
+            </div>
+            <div style="width:30%; float:right;">
+              <ul>
+                <li>SWIG</li>
+                <li>ipython</li>
+                <li>pymatlab</li>
+                <li>pymatbridge</li>
+                <li>smop</li>
+                <li>pymex</li>
+                <li>ompc</li>
+              </ul>
+            </div>
+ 
+          </section>
+
+          <section data-state="intro">
+            <h2>Integration</h2>
+          </section>
+
+          <section>
+            <img data-src="images/reuse.png" width="60%">
+            <aside class="notes">
+              Stand on the shoulders of giants
+            </aside>
+          </section>
+
+          <section>
+            <!-- podcast.__init__ episode 4, 15:40 -->
+            <h2>Python as Glue</h2>
+            <blockquote cite="">
+              &ldquo;Python's strength is that it's like
+              software superglue. It lets you build abstractions
+              like they were Lego&rdquo; -- Travis Oliphant
+            </blockquote>
+          </section>
+        </section>
+
+
+
+
+        <section>
+
           <section>
             <h2>Why worry about Interoperability</h2>
+          </section>
+
+          <section>
+            <h2>Performance</h2>
+            <img class="fragment" src="images/high-performance-python.jpg"/>
+            </section>
+
+          <section>
+            <h2>Necessity</h2>
             <aside class="notes">
               <ul>
                 <li>You can't solve a problem without a library/tool</li>
@@ -127,16 +163,6 @@
             </aside>
           </section>
 
-          <section>
-            <h2>Performance</h2>
-            <img class="fragment" src="images/high-performance-python.jpg"/>
-          </section>
-          <section>
-            <h2>Necessity</h2>
-          </section>
-          <section>
-            <h2>Development time is often more expensive than Computing time</h2>
-          </section>
         </section>
 
         <section>
@@ -415,6 +441,24 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
                     </ul>
                 </section>
             </section>
+
+        <section data-background="rgb(115, 29, 9)">
+          <section>
+            <h2>Before I get started...</h2>
+            <p>Answer the following questions</p>
+            <ul>
+                <li>Is your code under version control?</li>
+                <li>Do you write tests?</li>
+                <li>Do your tests run regularly?</li>
+                <li>Do you document your software?</li>
+            </ul>
+          </section>
+          <section>
+            <img data-src="images/software-carpentry-banner.png" />
+          </section>
+        </section>
+
+
 
         </div>
     </div>
