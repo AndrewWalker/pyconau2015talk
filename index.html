@@ -138,12 +138,10 @@
         </section>
 
 
-
-
         <section>
 
           <section>
-            <h2>Why worry about Interoperability</h2>
+            <h2>Two reasons for to learn about Interoperability</h2>
           </section>
 
           <section>
@@ -155,31 +153,25 @@
             <h2>Necessity</h2>
             <aside class="notes">
               <ul>
+                <li>Cost / Quality / Maintainability</li>
                 <li>You can't solve a problem without a library/tool</li>
-                <li>Cost</li>
-                <li>Quality</li>
-                <li>Maintainability</li>
               </ul>
             </aside>
           </section>
 
         </section>
 
-        <section>
-          <h2>Why wouldn't you do this?</h2>
-          <ul>
             <!-- 8:50 in podcast.__init__ episode 4 
   
             Travis Oliphant "It was not good for my acadmeic career"
-            -->
             <li class="fragment">It's not glamourous</li>
             <li class="fragment">It's time consuming to get right</li>
             <li class="fragment">It's hard to maintain</li>
             <li class="fragment">Often, something similar already exists</li>
             <li class="fragment">You probably need to read / write some C code</li>
-          </ul>
-        </section>
+            -->
 
+<!--
         <section>
             <h2>Approaches</h2>
             <ul>
@@ -189,18 +181,38 @@
                 <li>Use a Foreign Function Interface library</li>
             </ul>
         </section>
+        -->
+        <section>
+            <h2>Part 2</h2>
+            <p>an overview of the types of tools that are available</p>
+        </section>
 
         <section>
             <section>
               <h2>Subprocess</h2>
               <p class="fragment">Interoperability via subprocesses</p>
+              <aside class="notes">
+                <ul><li>Since python 2.4</li></ul>
+              </aside>
+            </section>
+
+            <section>
+                <h2>Graphviz Dot</h2>
+                  <img src="images/graphviz-out.png" style="width:25%; float:right;"/>
+              <pre style="box-shadow: none"><code class="shell" style="font-size:30px; width:70%">digraph G {
+ a;
+ b;
+ c;
+ a -> b [ label="a to b" ];
+ b -> c [ label="another label"];
+}</code></pre>
             </section>
 
             <section>
               <h2>Subprocess</h2>
               <pre><code class="python" style="font-size:25px;">from subprocess import *
 
-def graphviz(srcf, dstf, fmt='png'):
+def graphviz_dot(srcf, dstf, fmt='png'):
     cmd = 'dot -T%(fmt)s %(srcf)s -o %(dstf)s' 
     cmd = cmd % locals()
     subprocess.check_call(cmd.split())
@@ -215,12 +227,7 @@ def graphviz(srcf, dstf, fmt='png'):
                 </ul>
             </section>
 
-<!--
-            <section>
-              <img src="images/graphviz-out.png" width="30%"/>
-            </section>
---> 
-        </section>
+       </section>
 
 
 
@@ -319,7 +326,7 @@ bessel_jn.restype = ctypes.c_double</code></pre>
                 <p class="fragment">A DSL for integrating C, C++ and Python</p>
             </section>
             <section>
-                <h2>Distance From a Line to a Point</h2>
+                <h2>Distance From a Point to a Line Segment</h2>
                 <div class="fragment" style="background-color: white;">
                     <img src="images/lineptdist.png"/>
                 </div>
