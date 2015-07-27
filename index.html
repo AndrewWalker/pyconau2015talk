@@ -74,7 +74,10 @@
           <section>
             <h2>Not Invented Here Syndrome</h2>
             <aside class="notes">
-              It's easy to write python code. Sometimes too easy.
+              <ul>
+                <li>It's easy to write python code. Sometimes too easy.</li>
+                <li>Some of Pythons greatest success stories are about interoperability / porting</li>
+              </ul>
             </aside>
           </section>
 
@@ -184,7 +187,7 @@
         -->
         <section>
             <h2>Part 2</h2>
-            <p>an overview of the types of tools that are available</p>
+            <p>A whirlwind tour of interoperability tools</p>
         </section>
 
         <section>
@@ -296,7 +299,9 @@ print transpose22(np.array([[1, 2],[3,5]]))
                 </code></pre>
             </section>
             <section>
-                <h2>Minkowski sum using CGAL</h2>
+            </section>
+            <section>
+                <h2>Minkowski Sums</h2>
                 <pre><code style="max-height:100%">CGAL_MINK_SUM_CODE = '''
     Polygon_2 P;
     Polygon_2 Q;
@@ -320,7 +325,7 @@ print transpose22(np.array([[1, 2],[3,5]]))
     }'''</code></pre>
             </section>
             <section>
-                <h2>Minkowski sum using CGAL</h2>
+                <h2>Minkowski Sums</h2>
                 <pre  style="width:100%"><code>def minkowski_sum(p, q, **kwargs):
     out = []
     scipy.weave.inline(code = CGAL_MINK_SUM_CODE, 
@@ -478,8 +483,30 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
                         <li>you only need to exchange data (not functions)</li>
                     </ul>
                 </section>
-            </section>
-<!--
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Summary</h2>
+                        <ul>
+                            <li class="fragment">Who is the intended audience of your work?</li>
+                            <li class="fragment">How will your indended audience use your work?</li>
+                            <li class="fragment">At hardware resource are required?</li>
+                            <li class="fragment">What software dependencies are required?</li>
+                            <li class="fragment">How much will it cost you to write/maintain this work</li>
+                        </ul>
+                        </section>
+                        <section>
+                        <img data-src="images/reuse.png" width="60%">
+                        </section>
+                </section>
+
+        <section>
+            <h2>Reserve slides</h2>
+        </section>
+
+
+
         <section data-background="rgb(115, 29, 9)">
           <section>
             <h2>Before I go ...</h2>
@@ -495,7 +522,6 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
             <img data-src="images/software-carpentry-banner.png" />
           </section>
         </section>
-        -->
 
 
         </div>
