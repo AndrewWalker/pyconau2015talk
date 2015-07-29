@@ -51,20 +51,54 @@
         </section>
 
         <section>
-          <h2>What is "Scientific Software"?</h2>
-          <div class="fragment" style="background-color: white;">
-            <img data-src="images/science.png" width="60%" />
-          </div>
-          <aside class="notes">
-            <ul>
-                <li>Tools often commercial / expensive</li>
-                <li>Difficult integration problems</li>
-                <li>Complex dependencies</li>
-                <li>Different maintenance lifecycles</li>
-                <li>Different expectations for quality</li>
-                <li>Written by scientists, not software engineers</li>
-            </ul>
-          </aside>
+
+            <section>
+              <h2>What makes Scientific Software Different?</h2>
+              <aside class="notes">
+                <ul>
+                    <li>Tools often commercial / expensive</li>
+                    <li>Difficult integration problems</li>
+                    <li>Complex dependencies / maintenance</li>
+                    <li>Written by scientists, not software engineers</li>
+                    <li>Different expectations for quality</li>
+                </ul>
+              </aside>
+            </section>
+
+            <section>
+                <h2>Completed Research</h2>
+                <div class="fragment">
+                    <p>Autonomous Search for a Diffusive Source in an Unknown Structured Environment</p>
+                    <small>B. Ristic, A. Skvortsov and A. Walker, Entropy 2014, 16, 789-813</small>
+                    <p>Trapping of diffusive particles by rough absorbing surfaces: Boundary smoothing approach</p>
+                    <small>A. Skvortsov and A. Walker, Phys. Rev. E 90, 023202 – Published 15 August 2014</small>
+                </div>
+            </section>
+
+            <section>
+                <h2>Future Research</h2>
+                <div style="background-color: white; width: 45%; float: left;">
+                    <img src="images/mymap1.png"/>
+                </div>
+                <div style="background-color: white; width: 45%; float: right;">
+                    <img src="images/mymap.png"/>
+                </div>
+                <div style="padding-top: 1em; clear: right">
+                    <small>The Schwarz-Christoffel Toolbox, T. Driscoll, https://github.com/tobydriscoll/sc-toolbox</small>
+                    <small>Conformal Mapping Toolkit, T. Driscoll, https://github.com/tobydriscoll/cmtoolkit</small>
+                </div>
+            </section>
+
+            <section>
+                <h2>Porting Progress</h2>
+                <ul>
+                    <li class="fragment">Week 1. ~30 files ported</li>
+                    <li class="fragment">Week 2. ~5 files ported</li>
+                    <li class="fragment">Week 3.  1 line ported</li>
+                </ul>
+            </section>
+
+
         </section>
 
 
@@ -129,16 +163,7 @@
             </aside>
           </section>
 
-          <section>
-            <!-- podcast.__init__ episode 4, 15:40 -->
-            <h2>Python as Glue</h2>
-            <blockquote cite="">
-              &ldquo;Python's strength is that it's like
-              software superglue. It lets you build abstractions
-              like they were Lego&rdquo; -- Travis Oliphant
-            </blockquote>
-          </section>
-        </section>
+       </section>
 
 
         <section>
@@ -162,6 +187,16 @@
             </aside>
           </section>
 
+          <section>
+            <!-- podcast.__init__ episode 4, 15:40 -->
+            <h2>Python as Glue</h2>
+            <blockquote cite="">
+              &ldquo;Python's strength is that it's like
+              software superglue. It lets you build abstractions
+              like they were Lego&rdquo; -- Travis Oliphant
+            </blockquote>
+          </section>
+ 
         </section>
 
             <!-- 8:50 in podcast.__init__ episode 4 
@@ -175,16 +210,7 @@
             -->
 
 <!--
-        <section>
-            <h2>Approaches</h2>
-            <ul>
-                <li>Run an external process</li>
-                <li>Write a Python extension module</li>
-                <li>Use a tool to help you write an extension module</li>
-                <li>Use a Foreign Function Interface library</li>
-            </ul>
-        </section>
-        -->
+       -->
         <section>
             <h2>Part 2</h2>
             <p>A whirlwind tour of interoperability tools</p>
@@ -235,7 +261,7 @@ def graphviz_dot(srcf, dstf, fmt='png'):
         <section>
             <section>
                 <h2>ctypes</h2>
-                <p class="fragment">A standard library module for calling c-functions</p>
+                <p class="fragment">A standard library module for calling C functions</p>
             </section>
             <section>
                 <h2>Bessel functions</h2>
@@ -247,7 +273,7 @@ def graphviz_dot(srcf, dstf, fmt='png'):
                 </aside>
             </section>
             <section>
-                <pre><code class="python" data-trim >import ctypes
+                <pre><code class="python" style="font-size: 25px">import ctypes
 lib = ctypes.CDLL('/usr/lib/libm.dylib')
 
 bessel_j0 = lib.j0
@@ -281,7 +307,7 @@ bessel_jn.restype = ctypes.c_double</code></pre>
         <section>
             <section>
                 <h2>scipy.weave</h2>
-                <p class="fragment">Take a string of C/C++ code and make it callable from Python</p>
+                <p class="fragment">Take a string of C++ code and make it callable from Python</p>
             </section>
             <section>
                 <h2>Transpose a 2 by 2 matrix</h2>
@@ -297,8 +323,18 @@ bessel_jn.restype = ctypes.c_double</code></pre>
 
 print transpose22(np.array([[1, 2],[3,5]]))
                 </code></pre>
+                <aside class="notes">
+                    <ul>
+                        <li>arguments in/out</li>
+                        <li>code</li>
+                        <li>minimal wrapping</li>
+                        <li>Follows pythons calling convention (mutability)</li>
+                    </ul>
+                </aside>
             </section>
             <section>
+              <h2>Minkowski Sums</h2>
+              <img class="fragment" src="images/minksum.gif" style="width:80%"/>
             </section>
             <section>
                 <h2>Minkowski Sums</h2>
@@ -344,15 +380,17 @@ print transpose22(np.array([[1, 2],[3,5]]))
             <section>
                 <h2>Use scipy.weave when...</h2>
                 <ul>
-                    <li>you've got fragments of C/C++</li>
-                    <li>you're prototyping</li>
+                    <li>You're integrating fragments of (working) C++ code</li>
+                    <li>You're comfortable with C++</li>
+                    <li>You're prototyping</li>
                 </ul>
             </section>
             <section>
                 <h2>Avoid scipy.weave when...</h2>
                 <ul>
-                    <li>debugging may be time consuming</li>
-                    <li>you you need want to share your code</li>
+                    <li>Debugging may be time consuming</li>
+                    <li>Rebuilding the code on first run is not possible</li>
+                    <li>When you're interacting with many python data structures</li>
                 </ul>
             </section>
         </section>
@@ -362,75 +400,50 @@ print transpose22(np.array([[1, 2],[3,5]]))
                 <h2>Cython</h2>
                 <p class="fragment">A DSL for integrating C, C++ and Python</p>
             </section>
+
             <section>
                 <h2>Distance From a Point to a Line Segment</h2>
                 <div class="fragment" style="background-color: white;">
                     <img src="images/lineptdist.png"/>
                 </div>
             </section>
+
             <section>
                 <h2>Original Code</h2>
-                <pre><code data-trim>typedef struct tagXYZ
+                <pre><code data-trim> struct Point2
 {
-    float X, Y, Z;
-}
-XYZ;
+    float X;
+    float Y;
+};
 
-float Magnitude( XYZ *Point1, XYZ *Point2 )
-{
-    XYZ Vector;
-
-    Vector.X = Point2->X - Point1->X;
-    Vector.Y = Point2->Y - Point1->Y;
-    Vector.Z = Point2->Z - Point1->Z;
-
-    return (float)sqrt( Vector.X * Vector.X + Vector.Y * Vector.Y + Vector.Z * Vector.Z );
-}
-
-int DistancePointLine( XYZ *Point, XYZ *LineStart, XYZ *LineEnd, float *Distance )
-{
-    float LineMag;
-    float U;
-    XYZ Intersection;
- 
-    LineMag = Magnitude( LineEnd, LineStart );
- 
-    U = ( ( ( Point->X - LineStart->X ) * ( LineEnd->X - LineStart->X ) ) +
-        ( ( Point->Y - LineStart->Y ) * ( LineEnd->Y - LineStart->Y ) ) +
-        ( ( Point->Z - LineStart->Z ) * ( LineEnd->Z - LineStart->Z ) ) ) /
-        ( LineMag * LineMag );
- 
-    if( U < 0.0f || U > 1.0f )
-        return 0;   // closest point does not fall within the line segment
- 
-    Intersection.X = LineStart->X + U * ( LineEnd->X - LineStart->X );
-    Intersection.Y = LineStart->Y + U * ( LineEnd->Y - LineStart->Y );
-    Intersection.Z = LineStart->Z + U * ( LineEnd->Z - LineStart->Z );
- 
-    *Distance = Magnitude( Point, &Intersection );
- 
-    return 1;
-}</code></pre>    
+double magnitude( Point2 *p, Point2 *q );
+int dist_pt_seg( Point2 *p, Point2 *u, Point2 *v, double *result);
+</code></pre>    
             </section>
             <section>
                 <h2>Via a Jupyter Notebook</h2>
-                <pre><code code class="python" >%%cython
+                <pre style="width: 90%;"><code style="max-height: 70%" class="python" >%%cython
 
-cdef dist_sq(np.ndarray p, np.ndarray q):
+cdef magnitude(np.ndarray p, np.ndarray q):
     cdef double dx = q[0] - p[0]
     cdef double dy = q[1] - p[1]
-    return dx*dx + dy*dy
+    return np.sqrt(dx*dx + dy*dy)
 
 def dist_pt_seg(np.ndarray p, np.ndarray u, np.ndarray v):
-    cdef double seglen_sq = dist_sq(u, v)
-    t = (p[0] - u[0]) * (v[0] - u[0])
+    cdef double seglen = magnitude(u, v)
+    if seglen < 1e-8:
+        raise Exception('segment is co-linear')
+    t =  (p[0] - u[0]) * (v[0] - u[0])
     t += (p[1] - u[1]) * (v[1] - u[1])
-    t /= seglen_sq
-    if t < 0 or t > 1.0:
-        return 0.0
-    return np.sqrt(dist_sq(p, u + t * (v-u)))
-</code></pre>
+    t /= seglen**2
+    if t < 0.0:
+        return magnitude(p, u)
+    elif t > 1.0:
+        return magnitude(p, v)
+    else:
+        return magnitude(p, u + t * (v-u)) </code></pre>
             </section>
+
             <section>
                 <h2>Use cython if ...</h2>
                 <ul>
@@ -450,10 +463,12 @@ def dist_pt_seg(np.ndarray p, np.ndarray u, np.ndarray v):
         </section>
 
         <section>
+
             <section>
                 <h2>pymatbridge</h2>
                 <p class="fragment">Calling MATLAB from Python</p>
             </section>
+
             <section>
                 <h2>Solving the steady state heat equation with conformal mapping</h2>
                 <div class="fragment" style="background-color: white; width: 40%; float: left;">
@@ -463,6 +478,7 @@ def dist_pt_seg(np.ndarray p, np.ndarray u, np.ndarray v):
                     <img src="images/conformal2.png"/>
                 </div>
             </section>
+
             <section>
                 <h2>pymatbridge</h2>
                 <pre><code class="python">%load_ext pymatbridge
@@ -476,6 +492,7 @@ phi = lapsolve(p, boundary_conditions);
 figure;
 trisurf(tri, x, y, phi(x+i*y));</pre></code>
                 </section>
+
                 <section>
                     <h2>Use pymatbridge if ...</h2>
                     <ul>
@@ -483,23 +500,35 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
                         <li>you only need to exchange data (not functions)</li>
                     </ul>
                 </section>
-                </section>
+            </section>
+        </section>
 
-                <section>
-                    <section>
-                        <h2>Summary</h2>
-                        <ul>
-                            <li class="fragment">Who is the intended audience of your work?</li>
-                            <li class="fragment">How will your indended audience use your work?</li>
-                            <li class="fragment">At hardware resource are required?</li>
-                            <li class="fragment">What software dependencies are required?</li>
-                            <li class="fragment">How much will it cost you to write/maintain this work</li>
-                        </ul>
-                        </section>
-                        <section>
-                        <img data-src="images/reuse.png" width="60%">
-                        </section>
+        <section>
+            <section>
+                <h2>Summary</h2>
+                <ul>
+                    <li class="fragment">Run an external process</li>
+                    <li class="fragment">Write a Python extension module</li>
+                    <li class="framgent">Use a tool to help you write an extension module</li>
+                    <li class="fragment">Use a Foreign Function Interface library</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Summary</h2>
+                <ul>
+                    <li class="fragment">Who is the intended audience of your work?</li>
+                    <li class="fragment">How will your indended audience use your work?</li>
+                    <li class="fragment">At hardware resource are required?</li>
+                    <li class="fragment">What software dependencies are required?</li>
+                    <li class="fragment">How much will it cost you to write/maintain this work</li>
+                </ul>
                 </section>
+                <section>
+                    <img data-src="images/reuse.png" width="60%">
+                </section>
+            </section>
+        </section>
 
         <section>
             <h2>Reserve slides</h2>
@@ -507,21 +536,21 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
 
 
 
-        <section data-background="rgb(115, 29, 9)">
-          <section>
-            <h2>Before I go ...</h2>
-            <p>Answer the following questions</p>
-            <ul>
-                <li>Is your code under version control?</li>
-                <li>Do you write tests?</li>
-                <li>Do your tests run regularly?</li>
-                <li>Do you document your software?</li>
-            </ul>
-          </section>
-          <section>
-            <img data-src="images/software-carpentry-banner.png" />
-          </section>
-        </section>
+    <section data-background="rgb(115, 29, 9)">
+      <section>
+        <h2>Before I go ...</h2>
+        <p>Answer the following questions</p>
+        <ul>
+            <li>Is your code under version control?</li>
+            <li>Do you write tests?</li>
+            <li>Do your tests run regularly?</li>
+            <li>Do you document your software?</li>
+        </ul>
+      </section>
+      <section>
+        <img data-src="images/software-carpentry-banner.png" />
+      </section>
+    </section>
 
 
         </div>
