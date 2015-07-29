@@ -280,13 +280,17 @@ bessel_j0 = lib.j0
 bessel_j0.argtypes = [ ctypes.c_double ]
 bessel_j0.restype = ctypes.c_double
 
-bessel_j1 = lib.j1
-bessel_j1.argtypes = [ ctypes.c_double ]
-bessel_j1.restype = ctypes.c_double
-
 bessel_jn = lib.jn
 bessel_jn.argtypes = [ ctypes.c_int, ctypes.c_double ]
-bessel_jn.restype = ctypes.c_double</code></pre>
+bessel_jn.restype = ctypes.c_double 
+
+</code></pre>
+
+<pre><code class="fragment" style="font-size: 25px" >print bessel_j0(2.0)
+print bessel_jn(3, 3.0)
+
+</code></pre>
+
             </section>
             <section>
                 <h2>Use ctypes if ...</h2>
@@ -453,6 +457,7 @@ def dist_pt_seg(np.ndarray p, np.ndarray u, np.ndarray v):
                     <li>neither python or C/C++ is enough</li>
                 </ul>
             </section>
+
             <section>
                 <h2>Avoid cython if ...</h2>
                 <ul>
@@ -505,29 +510,39 @@ trisurf(tri, x, y, phi(x+i*y));</pre></code>
 
         <section>
             <section>
-                <h2>Summary</h2>
+                <h2>Summary - Options</h2>
                 <ul>
                     <li class="fragment">Run an external process</li>
+                    <li class="fragment">Call an existing library</li>
                     <li class="fragment">Write a Python extension module</li>
-                    <li class="framgent">Use a tool to help you write an extension module</li>
-                    <li class="fragment">Use a Foreign Function Interface library</li>
+                    <li class="fragment">Use a tool to help you write an extension module</li>
                 </ul>
+                <aside class="notes">
+                    <p>know which one of these you're trying to achieve</p>
+                </aside>
             </section>
 
             <section>
-                <h2>Summary</h2>
+                <h2>Summary - Advice</h2>
                 <ul>
-                    <li class="fragment">Who is the intended audience of your work?</li>
-                    <li class="fragment">How will your indended audience use your work?</li>
-                    <li class="fragment">At hardware resource are required?</li>
-                    <li class="fragment">What software dependencies are required?</li>
+                    <li class="fragment">Consider who is the intended audience</li>
+                    <li class="fragment">Consider how your audience will use your work</li>
+                    <li class="fragment">What dependencies are required?</li>
                     <li class="fragment">How much will it cost you to write/maintain this work</li>
                 </ul>
-                </section>
-                <section>
-                    <img data-src="images/reuse.png" width="60%">
-                </section>
+                <aside class="notes">
+                    <ul>
+                        <li >You, your team, the community</li>
+                        <li >interactive, scripted or at scale</li>
+                        <li >software, hardware or other?</li>
+                    </ul>
+                </aside>
             </section>
+
+            <section>
+                    <img data-src="images/reuse.png" width="60%">
+            </section>
+
         </section>
 
         <section>
