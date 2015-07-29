@@ -489,7 +489,10 @@ boundary_conditions = [0, 0, 0, 1, 0, 0]
 </code></pre>
                 <pre><code class="python" >%%matlab -i boundary_conditions 
 
+% solve the Laplace equation via conformal mapping
 phi = lapsolve(p, boundary_conditions);
+
+% plot the results
 [tri, x, y] = triangulate(p);
 figure;
 trisurf(tri, x, y, phi(x+i*y));</pre></code>
